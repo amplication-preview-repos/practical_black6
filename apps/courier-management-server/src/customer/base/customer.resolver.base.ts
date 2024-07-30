@@ -23,6 +23,9 @@ import { CustomerCountArgs } from "./CustomerCountArgs";
 import { CustomerFindManyArgs } from "./CustomerFindManyArgs";
 import { CustomerFindUniqueArgs } from "./CustomerFindUniqueArgs";
 import { DeleteCustomerArgs } from "./DeleteCustomerArgs";
+import { CourierCreateInput } from "../../courier/base/CourierCreateInput";
+import { Courier } from "../../courier/base/Courier";
+import { CourierWhereUniqueInput } from "../../courier/base/CourierWhereUniqueInput";
 import { CustomerService } from "../customer.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Customer)
@@ -96,5 +99,21 @@ export class CustomerResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.Mutation(() => Courier)
+  async CreateCustomer(
+    @graphql.Args()
+    args: CourierCreateInput
+  ): Promise<Courier> {
+    return this.service.CreateCustomer(args);
+  }
+
+  @graphql.Query(() => Courier)
+  async GetCustomer(
+    @graphql.Args()
+    args: CourierWhereUniqueInput
+  ): Promise<Courier> {
+    return this.service.GetCustomer(args);
   }
 }

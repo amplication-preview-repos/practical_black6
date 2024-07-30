@@ -26,6 +26,7 @@ import { Courier } from "./Courier";
 import { CourierFindManyArgs } from "./CourierFindManyArgs";
 import { CourierWhereUniqueInput } from "./CourierWhereUniqueInput";
 import { CourierUpdateInput } from "./CourierUpdateInput";
+import { CourierFindUniqueArgs } from "./CourierFindUniqueArgs";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -200,5 +201,39 @@ export class CourierControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Post("/courier")
+  @swagger.ApiOkResponse({
+    type: Courier,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async CreateCourier(
+    @common.Body()
+    body: CourierFindUniqueArgs
+  ): Promise<Courier> {
+    return this.service.CreateCourier(body);
+  }
+
+  @common.Get("/courier")
+  @swagger.ApiOkResponse({
+    type: Courier,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async GetCourier(
+    @common.Body()
+    body: CourierFindUniqueArgs
+  ): Promise<Courier> {
+    return this.service.GetCourier(body);
   }
 }

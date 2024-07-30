@@ -11,6 +11,9 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { PrismaService } from "../../prisma/prisma.service";
 import { Prisma, Courier as PrismaCourier } from "@prisma/client";
+import { CourierCreateInput } from "./CourierCreateInput";
+import { Courier } from "./Courier";
+import { CourierFindUniqueArgs } from "./CourierFindUniqueArgs";
 
 export class CourierServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -35,5 +38,11 @@ export class CourierServiceBase {
   }
   async deleteCourier(args: Prisma.CourierDeleteArgs): Promise<PrismaCourier> {
     return this.prisma.courier.delete(args);
+  }
+  async CreateCourier(args: CourierCreateInput): Promise<Courier> {
+    throw new Error("Not implemented");
+  }
+  async GetCourier(args: CourierFindUniqueArgs): Promise<Courier> {
+    throw new Error("Not implemented");
   }
 }

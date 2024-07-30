@@ -26,6 +26,8 @@ import { Customer } from "./Customer";
 import { CustomerFindManyArgs } from "./CustomerFindManyArgs";
 import { CustomerWhereUniqueInput } from "./CustomerWhereUniqueInput";
 import { CustomerUpdateInput } from "./CustomerUpdateInput";
+import { CourierWhereUniqueInput } from "../../courier/base/CourierWhereUniqueInput";
+import { Courier } from "../../courier/base/Courier";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -180,5 +182,39 @@ export class CustomerControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Post("/customer")
+  @swagger.ApiOkResponse({
+    type: Courier,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async CreateCustomer(
+    @common.Body()
+    body: CourierWhereUniqueInput
+  ): Promise<Courier> {
+    return this.service.CreateCustomer(body);
+  }
+
+  @common.Get("/customer")
+  @swagger.ApiOkResponse({
+    type: Courier,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async GetCustomer(
+    @common.Body()
+    body: CourierWhereUniqueInput
+  ): Promise<Courier> {
+    return this.service.GetCustomer(body);
   }
 }

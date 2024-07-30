@@ -13,6 +13,9 @@ import { PrismaService } from "../../prisma/prisma.service";
 import { Prisma, User as PrismaUser } from "@prisma/client";
 import { PasswordService } from "../../auth/password.service";
 import { transformStringFieldUpdateInput } from "../../prisma.util";
+import { CourierCreateInput } from "../../courier/base/CourierCreateInput";
+import { Courier } from "../../courier/base/Courier";
+import { CourierFindUniqueArgs } from "../../courier/base/CourierFindUniqueArgs";
 
 export class UserServiceBase {
   constructor(
@@ -58,5 +61,11 @@ export class UserServiceBase {
   }
   async deleteUser(args: Prisma.UserDeleteArgs): Promise<PrismaUser> {
     return this.prisma.user.delete(args);
+  }
+  async CreateUser(args: CourierCreateInput): Promise<Courier> {
+    throw new Error("Not implemented");
+  }
+  async GetUser(args: CourierFindUniqueArgs): Promise<Courier> {
+    throw new Error("Not implemented");
   }
 }

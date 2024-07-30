@@ -26,6 +26,8 @@ import { User } from "./User";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
 import { UserUpdateInput } from "./UserUpdateInput";
+import { CourierFindUniqueArgs } from "../../courier/base/CourierFindUniqueArgs";
+import { Courier } from "../../courier/base/Courier";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -218,5 +220,39 @@ export class UserControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Post("/user")
+  @swagger.ApiOkResponse({
+    type: Courier,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async CreateUser(
+    @common.Body()
+    body: CourierFindUniqueArgs
+  ): Promise<Courier> {
+    return this.service.CreateUser(body);
+  }
+
+  @common.Get("/user")
+  @swagger.ApiOkResponse({
+    type: Courier,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async GetUser(
+    @common.Body()
+    body: CourierFindUniqueArgs
+  ): Promise<Courier> {
+    return this.service.GetUser(body);
   }
 }

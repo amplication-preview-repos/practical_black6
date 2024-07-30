@@ -26,6 +26,9 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { CreateUserArgs } from "./CreateUserArgs";
 import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
+import { CourierCreateInput } from "../../courier/base/CourierCreateInput";
+import { Courier } from "../../courier/base/Courier";
+import { CourierFindUniqueArgs } from "../../courier/base/CourierFindUniqueArgs";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -130,5 +133,21 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.Mutation(() => Courier)
+  async CreateUser(
+    @graphql.Args()
+    args: CourierCreateInput
+  ): Promise<Courier> {
+    return this.service.CreateUser(args);
+  }
+
+  @graphql.Query(() => Courier)
+  async GetUser(
+    @graphql.Args()
+    args: CourierFindUniqueArgs
+  ): Promise<Courier> {
+    return this.service.GetUser(args);
   }
 }

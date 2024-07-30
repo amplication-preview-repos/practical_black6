@@ -26,6 +26,7 @@ import { CourierFindUniqueArgs } from "./CourierFindUniqueArgs";
 import { CreateCourierArgs } from "./CreateCourierArgs";
 import { UpdateCourierArgs } from "./UpdateCourierArgs";
 import { DeleteCourierArgs } from "./DeleteCourierArgs";
+import { CourierCreateInput } from "./CourierCreateInput";
 import { CourierService } from "../courier.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Courier)
@@ -140,5 +141,21 @@ export class CourierResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.Mutation(() => Courier)
+  async CreateCourier(
+    @graphql.Args()
+    args: CourierCreateInput
+  ): Promise<Courier> {
+    return this.service.CreateCourier(args);
+  }
+
+  @graphql.Query(() => Courier)
+  async GetCourier(
+    @graphql.Args()
+    args: CourierFindUniqueArgs
+  ): Promise<Courier> {
+    return this.service.GetCourier(args);
   }
 }
