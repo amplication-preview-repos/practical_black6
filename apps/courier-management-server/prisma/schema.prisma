@@ -1,0 +1,133 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Customer {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Courier {
+  createdAt     DateTime @default(now())
+  id            String   @id @default(cuid())
+  status        String?
+  updatedAt     DateTime @updatedAt
+  userId        Int?
+  vehicleNumber String?
+  vehicleType   String?
+}
+
+model PackageModel {
+  createdAt     DateTime @default(now())
+  customerId    Int?
+  id            String   @id @default(cuid())
+  packageDetail String?
+  receiverInfo  String?
+  senderInfo    String?
+  status        String?
+  updatedAt     DateTime @updatedAt
+}
+
+model Delivery {
+  consignmentId Int?
+  createdAt     DateTime  @default(now())
+  deliveryDate  DateTime?
+  id            String    @id @default(cuid())
+  packageId     Int?
+  pickupDate    DateTime?
+  status        String?
+  updatedAt     DateTime  @updatedAt
+}
+
+model Consignment {
+  createdAt      DateTime @default(now())
+  id             String   @id @default(cuid())
+  jobId          Int?
+  latitude       String?
+  longitude      String?
+  trackingNumber String?
+  updatedAt      DateTime @updatedAt
+}
+
+model Job {
+  createdAt       DateTime @default(now())
+  currentLocation String?
+  customerId      Int?
+  id              String   @id @default(cuid())
+  status          String?
+  trackingNumber  String?
+  updatedAt       DateTime @updatedAt
+}
+
+model Report {
+  content     String?
+  createdAt   DateTime @default(now())
+  generatedBy String?
+  id          String   @id @default(cuid())
+  reportType  String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Notification {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  message   String?
+  status    String?
+  typeField String?
+  updatedAt DateTime @updatedAt
+  userId    Int?
+}
+
+model Payment {
+  amount        Float?
+  createdAt     DateTime @default(now())
+  id            String   @id @default(cuid())
+  jobId         Int?
+  paymentMethod String?
+  status        String?
+  transactionId String?
+  updatedAt     DateTime @updatedAt
+  userId        Int?
+}
+
+model TrackingInformation {
+  consignmentId Int?
+  createdAt     DateTime @default(now())
+  id            String   @id @default(cuid())
+  jobId         Int?
+  latitude      String?
+  longitude     String?
+  status        String?
+  updatedAt     DateTime @updatedAt
+}
+
+model Feedback {
+  comments  String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  packageId Int?
+  rating    Int?
+  updatedAt DateTime @updatedAt
+  userId    Int?
+}
+
+model User {
+  address     String?
+  createdAt   DateTime @default(now())
+  email       String?  @unique
+  firstName   String?
+  id          String   @id @default(cuid())
+  lastName    String?
+  password    String
+  phoneNumber Int?
+  role        String?
+  roles       Json
+  updatedAt   DateTime @updatedAt
+  username    String   @unique
+}
